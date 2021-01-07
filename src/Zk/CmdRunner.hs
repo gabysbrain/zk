@@ -11,26 +11,15 @@ import Turtle ((<.>), (</>), FilePath)
 import qualified Turtle
 import Prelude hiding (FilePath)
 
+import Zk.Commands.NewNote (newNote)
+
 import Zk.Types
 
 runCmd :: Cmd -> IO ()
 
 runCmd CmdNew{..} = do
-  dieIfFolderNotFound notesDir
-  absFolderPath <- Turtle.realpath notesDir
-  -- change to the notes directory
-  --Turtle.cd absFolderPath
-  -- get the current date/time as a string
-  time <- formatTime defaultTimeLocale "%Y%m%d%H%M%S" <$> getCurrentTime 
-
-  -- add markdown extension
-  let note = absFolderPath </> Turtle.fromString time <.> "md"
-      noteTxt = show $ Turtle.format Turtle.fp note
-
-  -- create file (touch) (not needed)
-  -- open vim with file
-  Turtle.shell (T.pack $ "vim " ++ noteTxt) Turtle.empty
-  return ()
+  dieIfFolderNotFound notesDir -- FIXME: maybe put in newNote
+  newNote notesDir
 
 runCmd _ = putStrLn "hello"
 

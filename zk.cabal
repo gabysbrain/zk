@@ -27,6 +27,7 @@ library
   exposed-modules:
       Zk.CmdParser
       Zk.CmdRunner
+      Zk.Commands.NewNote
       Zk.Types
   other-modules:
       Paths_zk
@@ -35,7 +36,9 @@ library
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
+    , raw-strings-qq
     , system-filepath
+    , temporary
     , text
     , time
     , turtle
@@ -51,7 +54,9 @@ executable zk
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
+    , raw-strings-qq
     , system-filepath
+    , temporary
     , text
     , time
     , turtle
@@ -69,7 +74,9 @@ test-suite zk-test
   build-depends:
       base >=4.7 && <5
     , optparse-applicative
+    , raw-strings-qq
     , system-filepath
+    , temporary
     , text
     , time
     , turtle
