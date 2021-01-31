@@ -7,6 +7,8 @@ import Options.Applicative ( header, helper, info, fullDesc, progDesc )
 import Zk.CmdParser (myExecParser, parseCommand, zkDesc, zkHeader)
 import Zk.CmdRunner (runCmd)
 
+import Zk.Types
+
 main :: IO ()
 main = do
   command <- myExecParser $ info (helper <*> parseCommand)

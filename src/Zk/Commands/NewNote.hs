@@ -5,6 +5,8 @@ module Zk.Commands.NewNote where
 
 import System.IO.Temp (withSystemTempFile, writeSystemTempFile)
 import Control.Monad (unless, when)
+import Control.Monad.Reader (ask)
+import Control.Monad.Trans (liftIO)
 import Data.Time.Clock (getCurrentTime)
 import Data.Time.Format (formatTime, defaultTimeLocale)
 import qualified Data.Text as T
@@ -13,6 +15,8 @@ import qualified Turtle
 import Text.RawString.QQ
 import Prelude hiding (FilePath)
 
+import Zk.Types
+
 noteTmpl :: String
 noteTmpl = [r|---
 title: 
@@ -20,6 +24,11 @@ tags:
 ...
 
 |]
+
+runNewNote :: Zk ()
+runNewNote = do
+  config <- ask
+  liftIO $ newNote (notesDir config)
 
 newNote :: FilePath -> IO ()
 newNote notesDir = do
