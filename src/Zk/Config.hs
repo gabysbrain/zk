@@ -24,6 +24,9 @@ instance ToJSON FilePath where
 instance FromJSON FilePath where
   parseJSON = withText "FilePath" (return . fromText)
 
+defaultPath :: FilePath
+defaultPath = "~/.config/zk/config.yaml" -- FIXME: use OS config path
+
 fromPath :: FilePath -> IO Config
 fromPath path = do
   -- FIXME: replace this with decodeEither' to better handle errors
@@ -33,10 +36,13 @@ fromPath path = do
   return c
 
 fromDefaultPath :: IO Config
-fromDefaultPath = fromPath "~/.config/zk/config.yaml" -- FIXME: use OS config path
+fromDefaultPath = fromPath defaultPath -- FIXME: use OS config path
 
 toPath :: FilePath -> Config -> IO ()
 toPath path = encodeFile (encodeString path)
+
+toDefaultPath :: Config -> IO ()
+toDefaultPath = toPath defaultPath
 
 -- Check if a path is there and actually a folder
 dieIfFolderNotFound :: FilePath -> IO ()

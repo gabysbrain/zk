@@ -14,18 +14,14 @@ import qualified Zk.Config as Config
 import Prelude hiding (FilePath)
 
 import Zk.Commands.NewNote (runNewNote)
+import Zk.Commands.Init (runInit)
 
 import Zk.Types
 
 -- not Zk because we may not have the config (in case of init)
 runCmd :: Cmd -> IO ()
-
---runCmd CmdInit{..} = do
-  -- create the notes dir if not
-
-runCmd CmdNew{..} = runApp runNewNote
-
-runCmd _ = putStrLn "hello"
+runCmd CmdNew{..}  = runApp runNewNote
+runCmd CmdInit{..} = runInit
 
 runApp :: Zk a -> IO a
 runApp app = do

@@ -1,9 +1,11 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Zk.Types where
 
-import Filesystem.Path.CurrentOS (FilePath)
+import Filesystem.Path.CurrentOS (FilePath, fromText)
+import Data.Default (Default, def)
 import Data.Functor (Functor)
 import Control.Applicative (Applicative)
 import Control.Monad.Reader (ReaderT, MonadReader)
@@ -16,9 +18,7 @@ newtype Zk a = MyZk {
   } deriving (Functor, Applicative, Monad, MonadIO, MonadReader Config)
 
 data Cmd
-  = CmdInit {
-      cmdNotesDir :: FilePath
-    }
+  = CmdInit { showHelp :: Bool }
   | CmdNew {
       cmdNotesDir :: FilePath
     }
@@ -29,4 +29,7 @@ newtype Config
       notesDir :: FilePath
     }
   deriving (Show, Generic)
+
+instance Default Config where
+  def = Config $ fromText "~/.config/zk/config.yaml" 
 

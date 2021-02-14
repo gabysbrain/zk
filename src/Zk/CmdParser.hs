@@ -6,7 +6,8 @@ import Filesystem.Path.CurrentOS as Path
 import Options.Applicative ( ReadM, Parser, ParserInfo
                            , argument, command, customExecParser, metavar
                            , help, helper, info, fullDesc, progDesc, prefs
-                           , readerError, showHelpOnError, str, subparser, value)
+                           , readerError, showHelpOnError, str, subparser, value
+                           , switch, long, short )
 import qualified Data.Text as T
 import Prelude hiding (FilePath)
 
@@ -31,10 +32,13 @@ parseCommand = subparser $
                             (fullDesc <> progDesc "create a new note"))
 
 parseInitCommand :: Parser Cmd
-parseInitCommand = CmdInit <$> notesPathParser
+parseInitCommand = CmdInit <$> showHelpParser
 
 parseNewCommand :: Parser Cmd
 parseNewCommand = CmdNew <$> notesPathParser
+
+showHelpParser :: Parser Bool
+showHelpParser = switch (long "help" <> short 'h' <> help "Show help")
 
 -- FIXME: remove default path maybe?
 notesPathParser :: Parser FilePath
