@@ -24,6 +24,8 @@ dependencies:
 - aeson
 - bytestring
 - data-default
+- directory
+- filepath
 - mtl
 - optparse-applicative
 - raw-strings-qq

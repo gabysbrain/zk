@@ -9,7 +9,11 @@ import Data.Aeson.TH
 import qualified Data.ByteString as B
 import Data.Yaml
 import qualified Data.Text as T
-import Filesystem.Path.CurrentOS (FilePath, fromText, encodeString)
+import Filesystem.Path.CurrentOS (FilePath, fromText, encodeString, decodeString)
+import System.FilePath (takeDirectory)
+import System.Directory (XdgDirectory(XdgConfig)
+                        , createDirectoryIfMissing
+                        , getXdgDirectory)
 import qualified Turtle
 import Prelude hiding (FilePath)
 
@@ -24,8 +28,10 @@ instance ToJSON FilePath where
 instance FromJSON FilePath where
   parseJSON = withText "FilePath" (return . fromText)
 
-defaultPath :: FilePath
-defaultPath = "~/.config/zk/config.yaml" -- FIXME: use OS config path
+defaultPath :: IO FilePath
+defaultPath = do
+  p <- getXdgDirectory XdgConfig "zk/config.yaml"
+  return $ decodeString p
 
 fromPath :: FilePath -> IO Config
 fromPath path = do
@@ -36,13 +42,18 @@ fromPath path = do
   return c
 
 fromDefaultPath :: IO Config
-fromDefaultPath = fromPath defaultPath -- FIXME: use OS config path
+fromDefaultPath = defaultPath >>= fromPath 
 
 toPath :: FilePath -> Config -> IO ()
-toPath path = encodeFile (encodeString path)
+toPath path config = do
+  -- need to create the folder path
+  createDirectoryIfMissing True $ takeDirectory (encodeString path)
+  encodeFile (encodeString path) config
 
 toDefaultPath :: Config -> IO ()
-toDefaultPath = toPath defaultPath
+toDefaultPath config = do
+  p <- defaultPath 
+  toPath p config 
 
 -- Check if a path is there and actually a folder
 dieIfFolderNotFound :: FilePath -> IO ()

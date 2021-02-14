@@ -31,5 +31,5 @@ newtype Config
   deriving (Show, Generic)
 
 instance Default Config where
-  def = Config $ fromText "~/.config/zk/config.yaml" 
+  def = Config $ fromText "~/Sync/Notes/"
 

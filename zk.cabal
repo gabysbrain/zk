@@ -40,6 +40,8 @@ library
     , base >=4.7 && <5
     , bytestring
     , data-default
+    , directory
+    , filepath
     , mtl
     , optparse-applicative
     , raw-strings-qq
@@ -63,6 +65,8 @@ executable zk
     , base >=4.7 && <5
     , bytestring
     , data-default
+    , directory
+    , filepath
     , mtl
     , optparse-applicative
     , raw-strings-qq
@@ -89,6 +93,8 @@ test-suite zk-test
     , base >=4.7 && <5
     , bytestring
     , data-default
+    , directory
+    , filepath
     , hspec
     , mtl
     , optparse-applicative
