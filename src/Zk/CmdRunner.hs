@@ -8,8 +8,6 @@ import Control.Monad.Reader (runReaderT)
 import Data.Time.Clock (getCurrentTime)
 import Data.Time.Format (formatTime, defaultTimeLocale)
 import qualified Data.Text as T
-import Turtle ((<.>), (</>), FilePath)
-import qualified Turtle
 import qualified Zk.Config as Config
 import Prelude hiding (FilePath)
 

@@ -1,9 +1,12 @@
 
-.PHONY: all build test
+.PHONY: all build test 
 
 all: build test
 
-build:
+zk.cabal: package.yaml
+	nix develop -c hpack
+
+build: zk.cabal
 	nix develop -c cabal build
 
 test:

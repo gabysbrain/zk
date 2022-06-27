@@ -4,13 +4,12 @@
 
 module Zk.Types where
 
-import Filesystem.Path.CurrentOS (FilePath, fromText)
 import Data.Default (Default, def)
 import Data.Functor (Functor)
 import Control.Applicative (Applicative)
 import Control.Monad.Reader (ReaderT, MonadReader)
 import Control.Monad.IO.Class (MonadIO)
-import Prelude hiding (FilePath)
+import Prelude
 import GHC.Generics 
 
 newtype Zk a = MyZk {
@@ -31,5 +30,5 @@ newtype Config
   deriving (Show, Generic)
 
 instance Default Config where
-  def = Config $ fromText "~/Sync/Notes/"
+  def = Config "~/Sync/Notes/"
 

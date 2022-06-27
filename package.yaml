@@ -28,9 +28,9 @@ dependencies:
 - filepath
 - mtl
 - optparse-applicative
+- process
 - raw-strings-qq
 - system-filepath
-- turtle
 - temporary
 - text
 - time

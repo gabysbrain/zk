@@ -2,14 +2,14 @@
 
 module Zk.CmdParser where
 
-import Filesystem.Path.CurrentOS as Path
+import Filesystem.Path.CurrentOS as Path hiding (FilePath)
 import Options.Applicative ( ReadM, Parser, ParserInfo
                            , argument, command, customExecParser, metavar
                            , help, helper, info, fullDesc, progDesc, prefs
                            , readerError, showHelpOnError, str, subparser, value
                            , switch, long, short )
 import qualified Data.Text as T
-import Prelude hiding (FilePath)
+import Prelude
 
 import Zk.Types 
 
@@ -46,10 +46,11 @@ notesPathParser = argument
   (str >>= readFolderPath)
   (value "./" <> metavar "NOTESPATH" <> help "folder path for notes")
 
+-- FIXME: This just checks if the path is a valid string, not if it exists, etc
 readFolderPath :: String -> ReadM FilePath
-readFolderPath s = do
-  let path = Path.fromText (T.pack s)
-  if Path.valid path
+readFolderPath path = do
+  let path' = Path.fromText (T.pack path)
+  if Path.valid path'
      then return path
      else readerError ("invalid path: " ++ show path)
 

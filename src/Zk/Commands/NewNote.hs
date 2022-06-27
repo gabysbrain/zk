@@ -10,10 +10,11 @@ import Control.Monad.Trans (liftIO)
 import Data.Time.Clock (getCurrentTime)
 import Data.Time.Format (formatTime, defaultTimeLocale)
 import qualified Data.Text as T
-import Turtle ((<.>), (</>), FilePath)
-import qualified Turtle
 import Text.RawString.QQ
-import Prelude hiding (FilePath)
+import Prelude
+import qualified System.Directory as Dir
+import System.FilePath ((</>), (<.>))
+import qualified System.Process as Proc
 
 import Zk.Types
 
@@ -32,32 +33,31 @@ runNewNote = do
 
 newNote :: FilePath -> IO ()
 newNote notesDir = do
-  absFolderPath <- Turtle.realpath notesDir
+  absFolderPath <- Dir.canonicalizePath notesDir
 
   -- get the current date/time as a string
   time <- formatTime defaultTimeLocale "%Y%m%d%H%M%S" <$> getCurrentTime 
 
   -- create a temporary file and load it with the note template
-  tmpFile <- Turtle.decodeString <$> writeSystemTempFile "zk.md" noteTmpl
+  tmpFile <- writeSystemTempFile "zk.md" noteTmpl
 
   -- need some mod times to see if file changed
-  createTime <- Turtle.datefile tmpFile
+  createTime <- Dir.getModificationTime tmpFile
 
   -- change to the notes directory
   --Turtle.cd absFolderPath
 
   -- add markdown extension
-  let noteFile = absFolderPath </> Turtle.fromString time <.> "md"
-      noteFile' = show $ Turtle.format Turtle.fp noteFile
+  let noteFile = absFolderPath </> time <.> "md"
 
   -- create file (touch) (not needed)
   -- open vim with file
-  let tmpFile' = show $ Turtle.format Turtle.fp tmpFile
-  Turtle.shell (T.pack $ "vim " ++ tmpFile') Turtle.empty
+  -- FIXME: use editor variable or maybe config
+  Proc.runCommand $ "vim " ++ tmpFile
 
   -- see if the note was edited, otherwise just delete the file
-  modTime <- Turtle.datefile tmpFile
+  modTime <- Dir.getModificationTime tmpFile
   if modTime > createTime
-     then Turtle.mv tmpFile noteFile
-     else Turtle.rm tmpFile
+     then Dir.renameFile tmpFile noteFile
+     else Dir.removeFile tmpFile
 
