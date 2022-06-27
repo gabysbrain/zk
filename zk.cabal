@@ -30,6 +30,7 @@ library
       Zk.Commands.Init
       Zk.Commands.NewNote
       Zk.Config
+      Zk.Note
       Zk.Types
   other-modules:
       Paths_zk
@@ -84,6 +85,7 @@ test-suite zk-test
   main-is: Spec.hs
   other-modules:
       Zk.ConfigSpec
+      Zk.NoteSpec
       Paths_zk
   hs-source-dirs:
       test

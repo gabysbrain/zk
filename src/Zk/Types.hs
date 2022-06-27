@@ -32,3 +32,11 @@ newtype Config
 instance Default Config where
   def = Config "~/Sync/Notes/"
 
+data Note = Note 
+  { noteTitle :: String
+  , noteTags :: [String]
+  , noteModificationDate :: String -- FIXME: should be date
+  , noteCreationDate :: String -- FIXME: should be date
+  , noteContent :: String
+  } deriving (Show)
+

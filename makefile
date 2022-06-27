@@ -9,6 +9,6 @@ zk.cabal: package.yaml
 build: zk.cabal
 	nix develop -c cabal build
 
-test:
-	nix develop -c cabal test
+test: zk.cabal
+	nix develop -c cabal test --test-option=--color
 
