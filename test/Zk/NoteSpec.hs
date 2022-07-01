@@ -32,7 +32,7 @@ spec = do
         noteTags note `shouldContain` ["mollit", "delore"]
       it "retrieves all tags in the note" $ do
         note <- fromPath basicNoteFile
-        noteTags note `shouldBe` ["tag1", "tag2", "tag3", "mollit", "delore"]
+        noteTags note `shouldMatchList` ["tag1", "tag2", "tag3", "mollit", "delore"]
     describe "Metadata" $ do
       it "has the title in the title header field" $ do
         note <- fromPath basicNoteFile

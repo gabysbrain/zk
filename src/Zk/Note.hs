@@ -29,8 +29,8 @@ data NoteHeader = NoteHeader
 instance FromJSON NoteHeader where
   parseJSON (Object v) = do
     title <- v .: "title"
-    tagStr <- v .: "tags"
-    return $ NoteHeader title (words tagStr)
+    tags <- v .: "tags"
+    return $ NoteHeader title tags
 
 fromPath :: FilePath -> IO Note
 fromPath path = do

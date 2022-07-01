@@ -1,6 +1,6 @@
 ---
 title: My cool note title
-tags: #tag1 #tag2 #tag3
+tags: [tag1, tag2, tag3]
 ...
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
