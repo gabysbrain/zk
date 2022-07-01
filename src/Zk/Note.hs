@@ -6,13 +6,18 @@ import Control.Monad (unless, when, void)
 import Data.Aeson.Types
 import Data.Aeson.TH
 import Data.ByteString (ByteString)
+import Data.Char (toLower)
 import qualified Data.ByteString.Char8 as B
 import Data.Yaml
+import Text.Regex (Regex, mkRegex, subRegex)
 import Prelude 
 
 import Debug.Trace
 
 import Zk.Types
+
+invalidFilenameRe :: Regex
+invalidFilenameRe = mkRegex "[^A-Za-z0-9._-]"
 
 -- This header may get promoted to Zk.Types one day but right now it's just
 -- for internal yaml parsing reasons
@@ -66,6 +71,13 @@ parse rawText = do
                 }
 
 
---fromFileName :: String -> Config -> IO Note
+filename :: Note -> String
+filename Note {noteTitle = ttl, noteCreationDate = dt} = dt ++ "_" ++ filecaseTitle
+  where filecaseTitle = filecase ttl
+
+-- FIXME: This might need to be part of a Utils module
+filecase :: String -> String
+filecase fn = toLower <$> subRegex invalidFilenameRe fn "_"
+
 
 

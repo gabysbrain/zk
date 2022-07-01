@@ -47,6 +47,7 @@ library
     , optparse-applicative
     , process
     , raw-strings-qq
+    , regex-compat
     , system-filepath
     , temporary
     , text
@@ -72,6 +73,7 @@ executable zk
     , optparse-applicative
     , process
     , raw-strings-qq
+    , regex-compat
     , system-filepath
     , temporary
     , text
@@ -102,6 +104,7 @@ test-suite zk-test
     , optparse-applicative
     , process
     , raw-strings-qq
+    , regex-compat
     , system-filepath
     , temporary
     , text
