@@ -6,6 +6,8 @@ author:              "Author name here"
 maintainer:          "example@example.com"
 copyright:           "2020 Author name here"
 
+tested-with: GHC==9.0.1, GHC==8.10.4, GHC==8.8.4
+
 extra-source-files:
 - README.md
 - ChangeLog.md
@@ -62,4 +64,5 @@ tests:
     dependencies:
     - zk
     - hspec
+    - hspec-discover
 
