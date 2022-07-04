@@ -18,7 +18,7 @@ isValidFilename :: String -> Bool
 isValidFilename = isJust . matchRegex validFilenameRe
 
 basicNoteFile :: FilePath
-basicNoteFile = "test/fixtures/basic_note.md"
+basicNoteFile = "test/fixtures/20210624_basic_note.md"
 
 spec :: Spec
 spec = do

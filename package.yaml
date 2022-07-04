@@ -61,8 +61,10 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    verbatim:
+      build-tool-depends:
+        hspec-discover:hspec-discover == 2.*
     dependencies:
     - zk
     - hspec
-    - hspec-discover
 
