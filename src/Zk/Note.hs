@@ -66,7 +66,6 @@ parse rawText = do
   return $ Note { noteTitle = hdrTitle header
                 , noteTags = hdrTags header
                 , noteCreationDate = "" -- We can fill these later
-                , noteModificationDate = ""
                 , noteContent = B.unpack $ B.unlines $ tail content' -- first element of content is the end of header marker
                 }
 

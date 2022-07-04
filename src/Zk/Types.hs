@@ -35,7 +35,6 @@ instance Default Config where
 data Note = Note 
   { noteTitle :: String
   , noteTags :: [String]
-  , noteModificationDate :: String -- FIXME: should be date
   , noteCreationDate :: String -- FIXME: should be date
   , noteContent :: String
   } deriving (Show)
