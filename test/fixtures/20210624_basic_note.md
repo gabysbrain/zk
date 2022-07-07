@@ -1,5 +1,5 @@
 ---
-title: My cool note title
+title: Basic note
 tags: [tag1, tag2, tag3]
 ...
 

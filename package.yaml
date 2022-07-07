@@ -33,6 +33,7 @@ dependencies:
 - process
 - raw-strings-qq
 - regex-compat
+- split
 - system-filepath
 - temporary
 - text

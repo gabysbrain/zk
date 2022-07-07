@@ -6,6 +6,7 @@ import Test.Hspec
 import Data.Maybe (isJust)
 import Text.Regex (Regex, mkRegex, matchRegex)
 import System.IO.Temp (emptySystemTempFile)
+import System.FilePath (takeFileName)
 import Prelude
 
 import Zk.Note
@@ -36,9 +37,10 @@ spec = do
     describe "Metadata" $ do
       it "has the title in the title header field" $ do
         note <- fromPath basicNoteFile
-        noteTitle note `shouldBe` "My cool note title"
+        noteTitle note `shouldBe` "Basic note"
       it "properly computes the filename" $ do
-        pending
+        note <- fromPath basicNoteFile
+        filename note `shouldBe` takeFileName basicNoteFile
     describe "Utils" $ do
       it "filecase names are all lowercase" $ do
         filecase "Badfilename.md" `shouldSatisfy` isValidFilename

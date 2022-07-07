@@ -7,7 +7,9 @@ import Data.Aeson.Types
 import Data.Aeson.TH
 import Data.ByteString (ByteString)
 import Data.Char (toLower)
+import Data.List.Split (splitOn)
 import qualified Data.ByteString.Char8 as B
+import System.FilePath (takeFileName)
 import Data.Yaml
 import Text.Regex (Regex, mkRegex, subRegex)
 import Prelude 
@@ -36,11 +38,14 @@ fromPath :: FilePath -> IO Note
 fromPath path = do
   rawData <- B.readFile path
 
+  let fn = takeFileName path
+  let createDate = head $ splitOn "_" fn
+
   -- try to get the note and see if we have some error
   -- TODO: there should be a MonadT Note type which encapsulates errors and IO
   case Zk.Note.parse rawData of
     Left err -> ioError $ userError err
-    Right note -> return note
+    Right note -> return $ note {noteCreationDate=createDate}
 
 -- verify a note matches the proper format
 parse :: ByteString -> Either String Note
@@ -71,7 +76,7 @@ parse rawText = do
 
 
 filename :: Note -> String
-filename Note {noteTitle = ttl, noteCreationDate = dt} = dt ++ "_" ++ filecaseTitle
+filename Note {noteTitle = ttl, noteCreationDate = dt} = dt ++ "_" ++ filecaseTitle ++ ".md"
   where filecaseTitle = filecase ttl
 
 -- FIXME: This might need to be part of a Utils module
