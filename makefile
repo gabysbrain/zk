@@ -12,3 +12,6 @@ build: zk.cabal
 test: zk.cabal
 	nix develop -c cabal test --test-option=--color
 
+ghtest:
+	nix-shell -p act --run act
+

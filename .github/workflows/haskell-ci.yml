@@ -115,8 +115,7 @@ jobs:
       - name: create zk.cabal
         working-directory: source
         run: |
-          ls 
-          /root/.local/bin/hpack
+          $HOME/.local/bin/hpack
       - name: initial cabal.project for sdist
         run: |
           touch cabal.project
