@@ -40,7 +40,7 @@ jobs:
           apt-get install -y --no-install-recommends gnupg ca-certificates dirmngr curl git software-properties-common
           apt-add-repository -y 'ppa:hvr/ghc'
           apt-get update
-          apt-get install -y $CC cabal-install-3.4
+          apt-get install -y $CC cabal-install-3.4 jq
         env:
           CC: ${{ matrix.compiler }}
       - name: Set PATH and environment variables
@@ -105,13 +105,18 @@ jobs:
           rm -f cabal-plan.xz
           chmod a+x $HOME/.cabal/bin/cabal-plan
           cabal-plan --version
+      - name: install hpack
+        run: |
+          curl -sSL https://raw.githubusercontent.com/sol/hpack/main/get-hpack.sh | bash
       - name: checkout
         uses: actions/checkout@v2
         with:
           path: source
       - name: create zk.cabal
+        working-directory: source
         run: |
-          hpack
+          ls 
+          /root/.local/bin/hpack
       - name: initial cabal.project for sdist
         run: |
           touch cabal.project
