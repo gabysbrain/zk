@@ -111,7 +111,7 @@ jobs:
           path: source
       - name: create zk.cabal
         run: |
-          make zk.cabal
+          make -C source zk.cabal
       - name: initial cabal.project for sdist
         run: |
           touch cabal.project
