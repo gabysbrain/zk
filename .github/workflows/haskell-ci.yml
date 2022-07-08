@@ -17,9 +17,12 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: update cabal
-        run: cabal update
+        run: |
+          cabal update
       - name: build
-        run: make build
+        run: |
+          make build
       - name: test
-        run: make test
+        run: |
+          make test
       - run: nix flake check
