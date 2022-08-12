@@ -30,10 +30,19 @@ spec = do
         noteTags note `shouldContain` ["tag1", "tag2", "tag3"]
       it "retrieves tags from the text" $ do
         note <- fromPath basicNoteFile
-        noteTags note `shouldContain` ["mollit", "delore"]
+        noteTags note `shouldContain` ["dolore", "mollit"]
       it "retrieves all tags in the note" $ do
         note <- fromPath basicNoteFile
-        noteTags note `shouldMatchList` ["tag1", "tag2", "tag3", "mollit", "delore"]
+        noteTags note `shouldMatchList` ["tag1", "tag2", "tag3", "mollit", "dolore"]
+      it "avoids duplicate tags" $ do 
+        pending
+      it "parses all hashtags from a text block" $ do
+        tagsFromText "here are #some #tags for #you" `shouldMatchList` ["some", "tags", "you"]
+    describe "Tag cleaning" $ do
+      it "strips the leading hash if needed" $ do
+        cleanTag "#hello" `shouldBe` "hello"
+      it "uppercase tags are lowercased" $ do 
+        cleanTag "UpPeR" `shouldBe` "upper"
     describe "Metadata" $ do
       it "has the title in the title header field" $ do
         note <- fromPath basicNoteFile
