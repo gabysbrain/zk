@@ -10,8 +10,9 @@ build: zk.cabal
 	nix develop -c cabal build
 
 test: zk.cabal
-	nix develop -c cabal test --test-option=--color
+	nix develop -c cabal new-test --test-show-details=streaming --test-option=--color
 
 ghtest:
-	nix-shell -p act --run "act --rm"
+	nix develop -c cabal test --test-option=--color --test-option='-f test.JUnit'
+	#nix-shell -p act --run "act --rm"
 

@@ -2,3 +2,4 @@ zk.cabal
 .stack-work/
 dist-newstyle
 *~
+testresults.xml
